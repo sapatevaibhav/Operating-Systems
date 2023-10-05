@@ -1,9 +1,6 @@
-# Operating-Systems-Lab
-All codes for TE IT OSLab successfully tested.
-With output PDFs.
+# Operating-Systems
 
-Just try to follow me on GitHub it will be much beneficial.
-and also thanks for reading this f*king README.md
+Thanks for reading this f*king README.md
 
 Enjoy your Engineering journey...
 
