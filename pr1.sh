@@ -11,7 +11,7 @@ else
     echo -e "Address Book '$fname' already exists.\n"
 fi
 
-while true do;
+while true; do
     echo -e "******ADDRESS BOOK****** :\n"
     echo -e "\t1. View Address Book"
     echo -e "\t2. Insert a Record"
