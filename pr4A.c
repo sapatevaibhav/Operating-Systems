@@ -1,39 +1,32 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>
 
-#define BUFFER_SIZE 20
+#define BUFFER_SIZE 5
 
 void *producer(void *arg);
 void *consumer(void *arg);
 
-typedef struct
-{
-    int buffer[BUFFER_SIZE];
-    sem_t full, empty;
-} shared;
-
-shared sh;
-int item;
+int buffer[BUFFER_SIZE];
+sem_t empty, full, mutex;
 int in = 0, out = 0;
-sem_t mutex;
 
 int main()
 {
-    pthread_t ptid1, ptid2, ctid1;
-    sem_init(&sh.empty, 0, BUFFER_SIZE);
-    sem_init(&sh.full, 0, 0);
+    pthread_t ptid, ctid;
+
+    sem_init(&empty, 0, BUFFER_SIZE);
+    sem_init(&full, 0, 0);
     sem_init(&mutex, 0, 1);
 
-    pthread_create(&ptid1, NULL, producer, NULL);
-    pthread_create(&ptid2, NULL, producer, NULL);
-    pthread_create(&ctid1, NULL, consumer, NULL);
+    pthread_create(&ptid, NULL, producer, NULL);
+    pthread_create(&ctid, NULL, consumer, NULL);
 
-    pthread_join(ptid1, NULL);
-    pthread_join(ptid2, NULL);
-    pthread_join(ctid1, NULL);
+    pthread_join(ptid, NULL);
+    pthread_join(ctid, NULL);
+
     return 0;
 }
 
@@ -41,33 +34,39 @@ void *producer(void *arg)
 {
     while (1)
     {
-        item = in;
-        sem_wait(&sh.empty);
+        // Produce an item
+        int item = rand() % 100;
+
+        sem_wait(&empty);
         sem_wait(&mutex);
 
-        sh.buffer[in++] = item;
+        buffer[in] = item;
+        in = (in + 1) % BUFFER_SIZE;
 
-        printf("PRODUCER Thread id = %ld and Producer Item = %d \n", (long)pthread_self(), item);
+        printf("Producer produced: %d\n", item);
 
         sem_post(&mutex);
-        sem_post(&sh.full);
-        sleep(3);
+        sem_post(&full);
+
+        sleep(1); // Simulate producer's work
     }
 }
 
 void *consumer(void *arg)
 {
-    while (out < BUFFER_SIZE)
+    while (1)
     {
-        sem_wait(&sh.full);
+        sem_wait(&full);
         sem_wait(&mutex);
 
-        item = sh.buffer[out++];
-        printf("\tCONSUMER Thread id = %ld and Consumer Item = %d \n", (long)pthread_self(), item);
+        int item = buffer[out];
+        out = (out + 1) % BUFFER_SIZE;
+
+        printf("Consumer consumed: %d\n", item);
 
         sem_post(&mutex);
-        sem_post(&sh.empty);
-        sleep(1);
+        sem_post(&empty);
+
+        sleep(2); 
     }
-    return NULL;
 }
