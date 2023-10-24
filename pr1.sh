@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/fish
 
 echo "Enter Address Book Name: "
 read fname
