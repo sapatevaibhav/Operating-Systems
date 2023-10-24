@@ -42,36 +42,22 @@ int main()
     {
         printf("Child's PID: %d\n", getpid());
         printf("Parent's PID: %d\n", getppid());
-
         bubble_sort(arr, size, 1);
 
-        printf("Sorted in ascending order:\n");
+        printf("\nSorted in ascending order by Child:\n");
         for (int i = 0; i < size; i++)
         {
-            printf("%d\n", arr[i]);
+            printf("%d ", arr[i]);
         }
     }
     else if (pid > 0)
     {
         int status;
         wait(&status);
-        printf("Terminated Child's PID: %d\n", pid);
+        printf("\n\nTerminated Child's PID: %d\n", pid);
         printf("Parent's PID: %d\n", getpid());
-        printf("Parent's Parent PID: %d\n", getppid());
-
-        bubble_sort(arr, size, 0);
-
-        printf("Sorted in descending order:\n");
-        for (int i = 0; i < size; i++)
-        {
-            printf("%d\n", arr[i]);
-        }
+        printf("Parent's parent PID: %d\n", getppid());
     }
-    else
-    {
-        printf("Error in Fork\n");
-    }
-
     free(arr);
     return 0;
 }
