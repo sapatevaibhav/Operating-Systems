@@ -35,7 +35,7 @@ a) Create an address book. b) View the address book. c) Insert a record. d) Dele
 
 ---
 
-7.<a href="/sstf.c">Implement the C program for CPU Scheduling Algorithms: Shortest Job First (Preemptive) and Round Robin with different arrival time.</a>
+7🚫.<a href="/sjf_rr.c">Implement the C program for CPU Scheduling Algorithms: Shortest Job First (Preemptive) and Round Robin with different arrival time.</a>
 
 ---
 
