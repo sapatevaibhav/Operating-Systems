@@ -1,3 +1,5 @@
+// Thread synchronization using counting semaphores. Application to demonstrate: producer - consumer problem with counting semaphores and mutex.
+
 #include <stdio.h>
 #include <pthread.h>
 #include <semaphore.h>
@@ -6,7 +8,8 @@
 
 #define BUFFER_SIZE 5
 
-void *producer(void *arg);
+    void *
+    producer(void *arg);
 void *consumer(void *arg);
 
 int buffer[BUFFER_SIZE];
