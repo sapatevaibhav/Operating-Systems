@@ -1,4 +1,6 @@
 #!/bin/bash
+# Shell programming: Write a program to implement an address book with the options given below:
+# a) Create an address book. b) View the address book. c) Insert a record. d) Delete a record. e) Modify a record. f) Exit
 
 echo "Enter Address Book Name: "
 read fname
@@ -23,7 +25,7 @@ while true; do
     read ch
 
     case $ch in
-    1)
+    a)
         cat "$fname"
         ;;
     2)
