@@ -15,12 +15,11 @@ fi
 
 while true; do
     echo -e "******ADDRESS BOOK****** :\n"
-    echo -e "\t1. View Address Book"
-    echo -e "\t2. Insert a Record"
-    echo -e "\t3. Delete a Record"
-    echo -e "\t4. Modify a Record"
-    echo -e "\t5. Search a Record"
-    echo -e "\t6. Exit from Address Book"
+    echo -e "\ta. View Address Book"
+    echo -e "\tb. Insert a Record"
+    echo -e "\tc. Delete a Record"
+    echo -e "\td. Modify a Record"
+    echo -e "\te. Exit from Address Book"
     echo -e "Enter your choice: "
     read ch
 
@@ -28,7 +27,7 @@ while true; do
     a)
         cat "$fname"
         ;;
-    2)
+    b)
         echo -e "Enter ID of Employee: "
         read eid
         echo -e "Enter Name of Employee: "
@@ -39,7 +38,7 @@ while true; do
         read esal
         echo -e "$eid\t$ename\t$emob\t$esal" >> "$fname"
         ;;
-    3)
+    c)
         echo -e "Enter Employee ID to be Deleted: "
         read eid
         if grep -qw "$eid" "$fname"; then
@@ -50,7 +49,7 @@ while true; do
             echo "Error: Record does not exist!"
         fi
         ;;
-    4)
+    d)
         echo -e "Enter Employee ID to be Modified: "
         read eid
         if grep -qw "$eid" "$fname"; then
@@ -70,17 +69,7 @@ while true; do
             echo "Error: Record does not exist!"
         fi
         ;;
-    5)
-        echo -e "Enter Employee ID to be Searched: "
-        read eid
-        if grep -qw "$eid" "$fname"; then
-            grep -w "$eid" "$fname"
-            echo "Record Found"
-        else
-            echo "Error: Record does not exist!"
-        fi
-        ;;
-    6)
+    e)
         echo -e "Thank You\n"
         exit
         ;;
