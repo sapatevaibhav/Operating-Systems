@@ -47,15 +47,15 @@ a) Create an address book. b) View the address book. c) Insert a record. d) Dele
 
 ---
 
-10.<a href="/sstf.c">Implement the C program for Deadlock Avoidance Algorithm: Bankers Algorithm.</a>
+10.<a href="/bankers.c">Implement the C program for Deadlock Avoidance Algorithm: Bankers Algorithm.</a>
 
 ---
 
-12.<a href="/sstf.c">Inter-process communication in Linux using Pipes: FIFOS: Full duplex communication between two independent processes. The first process accepts sentences and writes on one pipe to be read by the second process and the second process counts the number of characters, the number of words, and the number of lines in accepted sentences, and writes this output in a text file and writes the contents of the file on the second pipe to be read by the first process and displays on standard output.</a>
+12.<a href="/piped_communication.c">Inter-process communication in Linux using Pipes: FIFOS: Full duplex communication between two independent processes. The first process accepts sentences and writes on one pipe to be read by the second process and the second process counts the number of characters, the number of words, and the number of lines in accepted sentences, and writes this output in a text file and writes the contents of the file on the second pipe to be read by the first process and displays on standard output.</a>
 
 ---
 
-13.<a href="/sstf.c">Inter-process Communication in Linux using Shared Memory: Application to demonstrate: Client and Server Programs in which the server process creates a shared memory segment and writes the message to the shared memory segment. The client process reads the message from the shared memory segment and displays it on the screen. </a>
+13.<a href="/shared_memory_communication.c">Inter-process Communication in Linux using Shared Memory: Application to demonstrate: Client and Server Programs in which the server process creates a shared memory segment and writes the message to the shared memory segment. The client process reads the message from the shared memory segment and displays it on the screen. </a>
 
 ---
 
