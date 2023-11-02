@@ -39,11 +39,11 @@ a) Create an address book. b) View the address book. c) Insert a record. d) Dele
 
 ---
 
-8.<a href="/sstf.c">Thread synchronization using counting semaphores. Application to demonstrate: producer - consumer problem with counting semaphores and mutex.</a>
+8.<a href="/semaphores.c">Thread synchronization using counting semaphores. Application to demonstrate: producer - consumer problem with counting semaphores and mutex.</a>
 
 ---
 
-9.<a href="/sstf.c">Thread synchronization and mutual exclusion using mutex. Application to demonstrate: Reader - Writer problem with reader priority.</a>
+9.<a href="/reader_writer.c">Thread synchronization and mutual exclusion using mutex. Application to demonstrate: Reader - Writer problem with reader priority.</a>
 
 ---
 

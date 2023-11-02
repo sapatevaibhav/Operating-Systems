@@ -1,10 +1,13 @@
+// Thread synchronization and mutual exclusion using mutex. Application to demonstrate: Reader - Writer problem with reader priority.
+
 #include <stdio.h>
 #include <unistd.h>
 #include <semaphore.h>
 #include <pthread.h>
 #include <sys/syscall.h>
 
-void *reader(void *argp);
+    void *
+    reader(void *argp);
 void *writer(void *argp);
 int buffer;
 int flag = 0;
