@@ -39,7 +39,6 @@ void bubble_sort(int a[], int n, int order)
             }
         }
     }
-    printf("\nSorted Array is:\n");
     for (i = 0; i < n; i++)
     {
         printf("%d ", a[i]);
@@ -65,7 +64,9 @@ int main(int argc, char *argv[])
     pid_t pid = fork();
     if (pid == 0)
     {
-        bubble_sort(arr, size, 1);
+        printf("\nChild's PID: %d", getpid());
+        printf("\nSorted Array in child:\n");
+        bubble_sort(arr, size, 4);
         execve(argv[1], argv + 2, NULL);
         exit(1);
     }
@@ -73,7 +74,9 @@ int main(int argc, char *argv[])
     {
         int status;
         wait(&status);
-        bubble_sort(arr, size, 4);
+        printf("\nParent's PID: %d", getpid());
+        printf("\nSorted Array in parent:\n");
+        bubble_sort(arr, size, 1);
     }
     free(arr);
     return 0;
