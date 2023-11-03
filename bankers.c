@@ -33,9 +33,9 @@ int main()
         }
 
     printf("Safe Sequence is: ");
-    int count, k;
+    int count = 0, k;
     while (count < n)
-    {
+       {
         count = k;
         for (int i = 0; i < n; i++)
         {
@@ -76,6 +76,5 @@ int main()
     {
         printf("\nAll processes can be allocated resources safely.\n");
     }
-
     return 0;
 }
