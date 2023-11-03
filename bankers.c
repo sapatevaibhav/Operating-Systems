@@ -35,8 +35,9 @@ int main()
     printf("Safe Sequence is: ");
     int count = 0, k;
     while (count < n)
-       {
-        count = k;
+    {
+        k = count;
+
         for (int i = 0; i < n; i++)
         {
             int safe = 1;
@@ -51,10 +52,16 @@ int main()
             if (safe)
             {
                 completed[i] = 1;
+
+                // Update the available resources array
                 for (int j = 0; j < m; j++)
+                {
                     available[j] += allocated[i][j];
+                }
+
                 printf("P%d ", i);
                 count++;
+                break;
             }
         }
         if (count == k)

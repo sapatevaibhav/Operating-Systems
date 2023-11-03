@@ -8,14 +8,12 @@ Oi, you are here then make sure to follow me.
 Operating System Practical Question Bank
 ---
 
-1.Implementation of Basic Linux Commands: echo, ls, read, cat, touch, test, loops, arithmetic
-comparison, conditional loops, grep, sed etc.
+1.<a href="/commands.pdf">Implementation of Basic Linux Commands: echo, ls, read, cat, touch, test, loops, arithmetic comparison, conditional loops, grep, sed etc. </a>
 
 ---
 
 2.<a href="/address_book.sh">
- Shell programming: Write a program to implement an address book with the options given below:
-a) Create an address book. b) View the address book. c) Insert a record. d) Delete a record. e) Modify a record. f) Exit.</a>
+ Shell programming: Write a program to implement an address book with the options given below: a) Create an address book. b) View the address book. c) Insert a record. d) Delete a record. e) Modify a record. f) Exit.</a>
 
 ---
 
