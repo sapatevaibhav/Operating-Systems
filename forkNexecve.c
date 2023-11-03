@@ -1,83 +1,79 @@
 // Implement the C program in which the main program accepts an array. The main program uses the FORK system call to create a new process called a child process. The parent process sorts an array and passes the sorted array to the child process through the command line arguments of the EXECVE system call. The child process uses an EXECVE system call to load a new program that displays the array in reverse order.
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 #include <unistd.h>
+#include <stdlib.h>
 
-void bubble_sort(int a[], int n, int order)
+void sort(int *array, int size)
 {
-    int i, j, temp;
-    if (order == 1)
+    for (int i = 0; i < size - 1; i++)
     {
-        for (i = n - 1; i > 0; i--)
+        for (int j = 0; j < size - 1 - i; j++)
         {
-            for (j = 0; j < i; j++)
+            if (array[j] > array[j + 1])
             {
-                if (a[j] > a[j + 1])
-                {
-                    temp = a[j];
-                    a[j] = a[j + 1];
-                    a[j + 1] = temp;
-                }
+                int temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
             }
         }
     }
-    else
-    {
-        for (i = n - 1; i > 0; i--)
-        {
-            for (j = 0; j < i; j++)
-            {
-                if (a[j] < a[j + 1])
-                {
-                    temp = a[j];
-                    a[j] = a[j + 1];
-                    a[j + 1] = temp;
-                }
-            }
-        }
-    }
-    for (i = 0; i < n; i++)
-    {
-        printf("%d ", a[i]);
-    }
-    printf("\n");
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-    int size;
+    char *argv[4];
 
-    printf("Enter the number of elements to be sorted: ");
+    int size;
+    printf("Enter the size of the array: ");
     scanf("%d", &size);
 
-    int *arr = (int *)malloc(size * sizeof(int));
-
-    printf("Enter %d elements: ", size);
+    int array[size];
+    printf("Enter the elements of the array: ");
     for (int i = 0; i < size; i++)
     {
-        scanf("%d", &arr[i]);
+        scanf("%d", &array[i]);
     }
 
     int pid = fork();
-    if (pid != 0)
+
+    if (pid < 0)
     {
-        int status;
-        wait(&status);
-        printf("\nParent's PID: %d", getpid());
-        printf("\nSorted Array in parent:\n");
-        bubble_sort(arr, size, 1);
-    }
-    else
-    {
-        execve(argv[1], argv + 2, NULL);
-        printf("\nChild's PID: %d", getpid());
-        printf("\nSorted Array in child:\n");
-        bubble_sort(arr, size, 4);
+        printf("Error creating child process\n");
         exit(1);
     }
-    free(arr);
+
+    if (pid > 0)
+    {
+        sort(array, size);
+
+        char *args[size + 2];
+        args[0] = "./display_reverse";
+        for (int i = 1; i <= size; i++)
+        {
+            args[i] = malloc(sizeof(char) * 10);
+            sprintf(args[i], "%d", array[i - 1]);
+        }
+        args[size + 1] = NULL;
+
+        execve("./display_reverse", args, NULL);
+    }
+
+    else
+    {
+
+        int sorted_array[size];
+        for (int i = 1; i <= size; i++)
+        {
+            sorted_array[i - 1] = atoi(argv[i]);
+        }
+
+        printf("The sorted array in reverse order is: ");
+        for (int i = size - 1; i >= 0; i--)
+        {
+            printf("%d ", sorted_array[i]);
+        }
+        printf("\n");
+    }
     return 0;
 }
