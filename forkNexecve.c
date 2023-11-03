@@ -61,22 +61,22 @@ int main(int argc, char *argv[])
         scanf("%d", &arr[i]);
     }
 
-    pid_t pid = fork();
-    if (pid == 0)
-    {
-        printf("\nChild's PID: %d", getpid());
-        printf("\nSorted Array in child:\n");
-        bubble_sort(arr, size, 4);
-        execve(argv[1], argv + 2, NULL);
-        exit(1);
-    }
-    else
+    int pid = fork();
+    if (pid != 0)
     {
         int status;
         wait(&status);
         printf("\nParent's PID: %d", getpid());
         printf("\nSorted Array in parent:\n");
         bubble_sort(arr, size, 1);
+    }
+    else
+    {
+        execve(argv[1], argv + 2, NULL);
+        printf("\nChild's PID: %d", getpid());
+        printf("\nSorted Array in child:\n");
+        bubble_sort(arr, size, 4);
+        exit(1);
     }
     free(arr);
     return 0;
