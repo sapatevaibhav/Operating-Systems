@@ -1,8 +1,10 @@
 // Implement the C program in which the main program accepts an array. The main program uses the FORK system call to create a new process called a child process. The parent process sorts an array and passes the sorted array to the child process through the command line arguments of the EXECVE system call. The child process uses an EXECVE system call to load a new program that displays the array in reverse order.
 
+// this code requires another file executed from the repo named display_reverse.c
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 void sort(int *array, int size)
 {
@@ -43,10 +45,32 @@ int main()
         exit(1);
     }
 
-    if (pid > 0)
+    if (pid != 0)
     {
+        int status;
+        wait(&status);
+        char *args[size + 2];
+
         sort(array, size);
 
+        int sorted_array[size];
+
+        printf("Sorted array by parent is: ");
+        for (int i = 1; i <= size; i++)
+        {
+            args[i] = malloc(sizeof(char) * 10);
+            sprintf(args[i], "%d", sorted_array[i - 1]);
+            printf("%d ", array[i - 1]);
+        }
+        args[size + 1] = NULL;
+        for (int i = 1; i <= size; i++)
+        {
+            free(args[i]);
+        }
+    }
+
+    else
+    {
         char *args[size + 2];
         args[0] = "./display_reverse";
         for (int i = 1; i <= size; i++)
@@ -55,25 +79,6 @@ int main()
             sprintf(args[i], "%d", array[i - 1]);
         }
         args[size + 1] = NULL;
-
         execve("./display_reverse", args, NULL);
     }
-
-    else
-    {
-
-        int sorted_array[size];
-        for (int i = 1; i <= size; i++)
-        {
-            sorted_array[i - 1] = atoi(argv[i]);
-        }
-
-        printf("The sorted array in reverse order is: ");
-        for (int i = size - 1; i >= 0; i--)
-        {
-            printf("%d ", sorted_array[i]);
-        }
-        printf("\n");
-    }
-    return 0;
 }
