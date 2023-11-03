@@ -6,18 +6,36 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-void bubble_sort(int a[], int n)
+void bubble_sort(int a[], int n, int order)
 {
     int i, j, temp;
-    for (i = n - 1; i > 0; i--)
+    if (order == 1)
     {
-        for (j = 0; j < i; j++)
+        for (i = n - 1; i > 0; i--)
         {
-            if (a[j] > a[j + 1])
+            for (j = 0; j < i; j++)
             {
-                temp = a[j];
-                a[j] = a[j + 1];
-                a[j + 1] = temp;
+                if (a[j] > a[j + 1])
+                {
+                    temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
+            }
+        }
+    }
+    else
+    {
+        for (i = n - 1; i > 0; i--)
+        {
+            for (j = 0; j < i; j++)
+            {
+                if (a[j] < a[j + 1])
+                {
+                    temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
             }
         }
     }
@@ -29,34 +47,9 @@ void bubble_sort(int a[], int n)
     printf("\n");
 }
 
-int binarySearch(int arr[], int size, int key)
-{
-    int left = 0;
-    int right = size - 1;
-    while (left <= right)
-    {
-        int mid = left + (right - left) / 2;
-        if (arr[mid] == key)
-        {
-            printf("Element found");
-            return 0;
-        }
-        if (arr[mid] < key)
-        {
-            left = mid + 1;
-        }
-        else
-        {
-            right = mid - 1;
-        }
-    }
-    printf("Element not found");
-    return -1;
-}
-
 int main(int argc, char *argv[])
 {
-    int size, key;
+    int size;
 
     printf("Enter the number of elements to be sorted: ");
     scanf("%d", &size);
@@ -68,22 +61,19 @@ int main(int argc, char *argv[])
     {
         scanf("%d", &arr[i]);
     }
-    printf("Enter the key to be searched: ");
-    scanf("%d", &key);
 
-    bubble_sort(arr, size);
     pid_t pid = fork();
     if (pid == 0)
     {
+        bubble_sort(arr, size, 1);
         execve(argv[1], argv + 2, NULL);
-
-        binarySearch(arr, size, key);
         exit(1);
     }
     else
     {
         int status;
         wait(&status);
+        bubble_sort(arr, size, 4);
     }
     free(arr);
     return 0;
