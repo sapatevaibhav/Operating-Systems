@@ -33,44 +33,68 @@ int main()
         }
 
     printf("Safe Sequence is: ");
-    int count = 0, k;
+    int safeSequence[n];
+    int count = 0;
+
     while (count < n)
     {
-        k = count;
+        int k = -1;
 
         for (int i = 0; i < n; i++)
         {
-            int safe = 1;
-            for (int j = 0; j < m; j++)
+            if (!completed[i])
             {
-                if (completed[i] || need[i][j] > available[j])
+                int safe = 1;
+                for (int j = 0; j < m; j++)
                 {
-                    safe = 0;
+                    if (need[i][j] > available[j])
+                    {
+                        safe = 0;
+                        break;
+                    }
+                }
+                if (safe)
+                {
+                    k = i;
                     break;
                 }
             }
-            if (safe)
-            {
-                completed[i] = 1;
-
-                // Update the available resources array
-                for (int j = 0; j < m; j++)
-                {
-                    available[j] += allocated[i][j];
-                }
-
-                printf("P%d ", i);
-                count++;
-                break;
-            }
         }
-        if (count == k)
+
+        if (k == -1)
+        {
+
             break;
+        }
+
+        completed[k] = 1;
+        for (int j = 0; j < m; j++)
+        {
+            available[j] += allocated[k][j];
+        }
+
+        safeSequence[count] = k;
+        count++;
     }
 
-    if (count < n)
+    if (count == n)
     {
-        printf("\nUnsafe state detected!\n");
+
+        for (int i = 0; i < n; i++)
+        {
+            printf("P%d", safeSequence[i]);
+            if (i < n - 1)
+            {
+                printf(" -> ");
+            }
+        }
+        printf("\n");
+
+        printf("All processes can be allocated resources safely.\n");
+    }
+    else
+    {
+        printf("Unsafe state detected!\n");
         for (int i = 0; i < n; i++)
         {
             if (!completed[i])
@@ -79,9 +103,4 @@ int main()
             }
         }
     }
-    else
-    {
-        printf("\nAll processes can be allocated resources safely.\n");
-    }
-    return 0;
 }
