@@ -26,7 +26,7 @@
     {
         for (int j = i + 1; j < n; j++)
         {
-            if (abs(sequence[i] - head) > abs(sequence[j] - head))
+            if (sequence[i] > sequence[j] )
             {
                 int temp = sequence[i];
                 sequence[i] = sequence[j];

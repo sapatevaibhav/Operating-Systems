@@ -1,181 +1,175 @@
 // Implement the C program for Page Replacement Algorithms: FCFS, LRU, and Optimal for frame size as minimum of three.
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
-    int seektime = 0;
+int seektime = 0;
 
-void fcfs(int sequence[], int head, int n);
-void lru(int sequence[], int head, int n);
-void optimal(int sequence[], int head, int n);
+void pageReplacement(char in[], int n, int nf);
 
 int main()
 {
-    int n, t, i, head, choice;
+    int nf;
+    printf("Enter the length of string: ");
+    scanf("%d", &nf);
 
-    printf("Enter the number of disk requests: ");
-    scanf("%d", &n);
-    printf("Enter the total number of tracks: ");
-    scanf("%d", &t);
+    char in[nf];
+    int choice;
 
-    int sequence[n];
-
-    printf("Enter the disk request sequence for a disk with %d tracks: ", t);
-
-    for (i = 0; i < n; i++)
+    printf("Enter the string: ");
+    for (int i = 0; i < nf; i++)
     {
-        scanf("%d", &sequence[i]);
+        scanf(" %c", &in[i]);
     }
 
-    printf("Enter the initial position of the R/W head: ");
-    scanf("%d", &head);
+    int n = nf;
 
-    do
-    {
-        printf("\n----------------------------------\n");
-        printf("1. FCFS\n2. LRU\n3. Optimal\n4. EXIT\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
-
-        switch (choice)
-        {
-        case 1:
-            fcfs(sequence, head, n);
-            break;
-        case 2:
-            lru(sequence, head, n);
-            break;
-        case 3:
-            optimal(sequence, head, n);
-            break;
-        case 4:
-            exit(0);
-            break;
-        }
-    } while (1);
+    pageReplacement(in, n, nf);
 
     return 0;
 }
 
-void fcfs(int sequence[], int head, int n)
+void pageReplacement(char in[], int n, int nf)
 {
-    int i, temp = head;
-    seektime = 0;
+    int i, j, k;
+    char frame[nf];
+    int framePointer = 0;
 
-    printf("The Disk sequence is:\n");
+    printf("The Page reference sequence is:\n");
 
     for (i = 0; i < n; i++)
     {
-        printf(" > %d", sequence[i]);
-        seektime += abs(sequence[i] - temp);
-        temp = sequence[i];
+        printf(" > %c", in[i]);
     }
 
-    printf("\nSeek Time of FCFS = %d\n", seektime);
-}
-
-void lru(int sequence[], int head, int n)
-{
-    int i, j, k, fault = 0, flag, pos;
-    int frame_size;
-
-    printf("Enter the frame size: ");
-    scanf("%d", &frame_size);
-
-    int frame[frame_size];
-    int page[n];
-
-    for (i = 0; i < frame_size; i++)
-    {
-        frame[i] = -1;
-    }
-
-    printf("The Disk sequence is:\n");
+    // FCFS Algorithm
+    int page_faults_fcfs = 0;
+    char frame_fcfs[nf];
+    int framePointer_fcfs = 0;
 
     for (i = 0; i < n; i++)
     {
-        page[i] = -1;
+        bool pageFault = true;
 
-        for (j = 0; j < frame_size; j++)
+        for (j = 0; j < nf; j++)
         {
-            if (frame[j] == sequence[i])
+            if (frame_fcfs[j] == in[i])
             {
-                page[i] = j;
+                pageFault = false;
                 break;
             }
         }
 
-        if (page[i] == -1)
+        if (pageFault)
         {
-            fault++;
+            page_faults_fcfs++;
+            frame_fcfs[framePointer_fcfs] = in[i];
+            framePointer_fcfs = (framePointer_fcfs + 1) % nf;
+        }
+    }
 
-            if (i < frame_size)
+    printf("\nPage Faults in FCFS = %d\n", page_faults_fcfs);
+
+    // LRU Algorithm
+    int page_faults_lru = 0;
+    char frame_lru[nf];
+    int framePointer_lru = 0;
+    int leastRecentlyUsed[nf];
+
+    for (i = 0; i < nf; i++)
+    {
+        frame_lru[i] = ' ';
+    }
+
+    for (i = 0; i < n; i++)
+    {
+        bool pageFault = true;
+
+        for (j = 0; j < nf; j++)
+        {
+            if (frame_lru[j] == in[i])
             {
-                frame[i] = sequence[i];
-                page[i] = i;
+                pageFault = false;
+                leastRecentlyUsed[j] = i;
+                break;
             }
-            else
+        }
+
+        if (pageFault)
+        {
+            page_faults_lru++;
+            int min = leastRecentlyUsed[0];
+            int replacePage = 0;
+
+            for (j = 0; j < nf; j++)
             {
-                int max = -1;
-                for (j = 0; j < frame_size; j++)
+                if (leastRecentlyUsed[j] < min)
                 {
-                    if (page[j] == -1)
+                    min = leastRecentlyUsed[j];
+                    replacePage = j;
+                }
+            }
+
+            frame_lru[replacePage] = in[i];
+            leastRecentlyUsed[replacePage] = i;
+        }
+    }
+
+    printf("Page Faults in LRU = %d\n", page_faults_lru);
+
+    // Optimal Algorithm
+    int page_faults_optimal = 0;
+    char frame_optimal[nf];
+    int framePointer_optimal = 0;
+
+    for (i = 0; i < nf; i++)
+    {
+        frame_optimal[i] = ' ';
+    }
+
+    for (i = 0; i < n; i++)
+    {
+        bool pageFault = true;
+
+        for (j = 0; j < nf; j++)
+        {
+            if (frame_optimal[j] == in[i])
+            {
+                pageFault = false;
+                break;
+            }
+        }
+
+        if (pageFault)
+        {
+            page_faults_optimal++;
+            int leastFrequent = 0;
+            int replacePage = 0;
+
+            for (j = 0; j < nf; j++)
+            {
+                int count = 0;
+                for (k = i + 1; k < n; k++)
+                {
+                    if (frame_optimal[j] == in[k])
                     {
-                        pos = j;
+                        count++;
                         break;
                     }
-
-                    if (max < page[j])
-                    {
-                        max = page[j];
-                        pos = j;
-                    }
                 }
 
-                frame[pos] = sequence[i];
-                page[i] = pos;
-            }
-        }
-
-        printf(" > %d", sequence[i]);
-    }
-
-    seektime = fault;
-    printf("\nSeek Time of LRU = %d\n", seektime);
-}
-
-void optimal(int sequence[], int head, int n)
-{
-    int i, j, k, flag, pos, max, index;
-    int temp[n];
-    int visited[n];
-
-    for (i = 0; i < n; i++)
-    {
-        temp[i] = sequence[i];
-        visited[i] = 0;
-    }
-
-    printf("The Disk sequence is:\n");
-    for (i = 0; i < n; i++)
-    {
-        max = -1;
-        for (j = 0; j < n; j++)
-        {
-            if (!visited[j])
-            {
-                if (max == -1 || abs(temp[j] - head) > max)
+                if (count < leastFrequent)
                 {
-                    max = abs(temp[j] - head);
-                    index = j;
+                    leastFrequent = count;
+                    replacePage = j;
                 }
             }
+
+            frame_optimal[replacePage] = in[i];
         }
-        visited[index] = 1;
-        seektime += max;
-        head = temp[index];
-        printf(" > %d", head);
     }
 
-    printf("\nSeek Time of Optimal = %d\n", seektime);
+    printf("Page Faults in Optimal = %d\n", page_faults_optimal);
 }
