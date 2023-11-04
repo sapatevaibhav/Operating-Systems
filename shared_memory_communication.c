@@ -28,7 +28,7 @@ int main()
     printf("Parent Process: Process attached at %p\n", shared_memory);
     printf("Parent Process: Enter some data to write to shared memory\n");
     read(0, buff, 100);
-    strcpy(shared_memory, buff);
+    strcpy((char*)shared_memory, buff);
     printf("Parent Process: You wrote : %s\n", (char *)shared_memory);
 
     pid_t pid = fork();
