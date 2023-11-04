@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     int sorted_array[argc - 1];
-    for (int i = 1; i <= argc - 1; i++)
+    for (int i = 0; i < argc - 1; i++)
     {
-        sorted_array[i - 1] = atoi(argv[i]);
+        sorted_array[i] = atoi(argv[i + 1]);
     }
 
     printf("The sorted array by child is: ");
@@ -16,4 +16,5 @@ void main(int argc, char *argv[])
     }
     printf("\n");
 
+    return 0;
 }

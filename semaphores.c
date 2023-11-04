@@ -8,8 +8,7 @@
 
 #define BUFFER_SIZE 5
 
-    void *
-    producer(void *arg);
+void *producer(void *arg);
 void *consumer(void *arg);
 
 int buffer[BUFFER_SIZE];

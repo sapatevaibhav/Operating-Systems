@@ -39,16 +39,9 @@ int main()
 
     int pid = fork();
 
-    if (pid < 0)
-    {
-        printf("Error creating child process\n");
-        exit(1);
-    }
-
     if (pid != 0)
     {
-        int status;
-        wait(&status);
+       
         char *args[size + 2];
 
         sort(array, size);
