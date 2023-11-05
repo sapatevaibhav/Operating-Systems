@@ -25,7 +25,7 @@ int main()
     {
         for (int j = i + 1; j < n; j++)
         {
-            if (sequence[i] > sequence[j] )
+            if (sequence[i] > sequence[j])
             {
                 int temp = sequence[i];
                 sequence[i] = sequence[j];
@@ -34,9 +34,7 @@ int main()
         }
     }
 
-    printf("The Disk sequence is:\n");
-
-     for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         seektime += abs(sequence[i] - head);
         head = sequence[i];
