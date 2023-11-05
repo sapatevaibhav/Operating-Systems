@@ -12,7 +12,7 @@ Operating System Practical Question Bank
 
 ---
 
-2.<a href="/address_book.sh">
+2.<a href="/address.sh">
  Shell programming: Write a program to implement an address book with the options given below: a) Create an address book. b) View the address book. c) Insert a record. d) Delete a record. e) Modify a record. f) Exit.</a>
 
 ---
@@ -26,6 +26,8 @@ Operating System Practical Question Bank
 ---
 
 5.<a href="/forkNexecve.c">Implement the C program in which the main program accepts an array. The main program uses the FORK system call to create a new process called a child process. The parent process sorts an array and passes the sorted array to the child process through the command line arguments of the EXECVE system call. The child process uses an EXECVE system call to load a new program that displays the array in reverse order.</a>
+
+Requires <a href="/display_reverse.c">display_reverse</a> file.
 
 ---
 
@@ -49,7 +51,9 @@ Operating System Practical Question Bank
 
 ---
 
-12.<a href="/piped_communication.c">Inter-process communication in Linux using Pipes: FIFOS: Full duplex communication between two independent processes. The first process accepts sentences and writes on one pipe to be read by the second process and the second process counts the number of characters, the number of words, and the number of lines in accepted sentences, and writes this output in a text file and writes the contents of the file on the second pipe to be read by the first process and displays on standard output.</a>
+12.<a href="/pipe_server.c">Inter-process communication in Linux using Pipes: FIFOS: Full duplex communication between two independent processes. The first process accepts sentences and writes on one pipe to be read by the second process and the second process counts the number of characters, the number of words, and the number of lines in accepted sentences, and writes this output in a text file and writes the contents of the file on the second pipe to be read by the first process and displays on standard output.</a>
+
+Requires <a href="/pipe_client.c">pipe_client</a> file.
 
 ---
 
