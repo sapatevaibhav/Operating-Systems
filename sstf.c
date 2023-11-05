@@ -36,14 +36,13 @@ int main()
 
     printf("The Disk sequence is:\n");
 
-    for (int i = 0; i < n; i++)
+     for (int i = 0; i < n; i++)
     {
-        printf(" > %d", sequence[i]);
         seektime += abs(sequence[i] - head);
         head = sequence[i];
     }
 
-    printf("\nSeek Time of SSTF = %d\n", seektime);
+    printf("Seek Time of SSTF = %d\n", seektime);
 
     return 0;
 }
