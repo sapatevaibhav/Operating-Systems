@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
         sorted_array[i] = atoi(argv[i + 1]);
     }
 
-    printf("The sorted array by child is: ");
+    printf("\nThe sorted array by child is: ");
     for (int i = argc - 2; i >= 0; i--)
     {
         printf("%d ", sorted_array[i]);

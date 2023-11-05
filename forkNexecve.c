@@ -39,6 +39,8 @@ int main()
 
     if (pid != 0)
     {
+        int status;
+        wait(&status);
 
         char *args[size + 2];
 
