@@ -63,7 +63,6 @@ int main()
 
         if (k == -1)
         {
-
             break;
         }
 

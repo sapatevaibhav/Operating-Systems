@@ -24,8 +24,6 @@ void sort(int *array, int size)
 
 int main()
 {
-    char *argv[4];
-
     int size;
     printf("Enter the size of the array: ");
     scanf("%d", &size);
@@ -41,7 +39,7 @@ int main()
 
     if (pid != 0)
     {
-       
+
         char *args[size + 2];
 
         sort(array, size);

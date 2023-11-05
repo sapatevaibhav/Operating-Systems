@@ -42,7 +42,6 @@ int main()
         printf("\nChild's PID: %d\n", getpid());
         printf("Parent's PID: %d\n", getppid());
         bubble_sort(arr, size);
-
         printf("\nSorted by Child:\n");
         for (int i = 0; i < size; i++)
         {
@@ -51,6 +50,7 @@ int main()
     }
     else if (pid > 0)
     {
+        sleep(20);
         int status;
         wait(&status);
         bubble_sort(arr, size);
